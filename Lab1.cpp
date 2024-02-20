@@ -1,4 +1,4 @@
-//printing 0 to 9 using 3 loops
+// Task 1 printing 0 to 9 using 3 loops
 
 #include <iostream>
 
@@ -31,7 +31,7 @@ int main()
     return 0;
 }
 
-//checking odd,even,perfect number,palindrome and prime number using 3 loops
+//task 2 checking odd,even,perfect number,palindrome and prime number using 3 loops
 #include<iostream>
 using namespace std;
 
@@ -238,3 +238,34 @@ int main()
 
     return 0;
 }
+//task 3- take upperbound and lowerbound through user input and print all the numbers between them using 3 loops
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n1,n2;
+    cout<<"enter 2 numbers "<<endl;
+    cin>>n1;
+    cin>>n2;
+    for(int i=n1; i<=n2; i++)
+    {
+        cout<<i<<endl;
+    }
+    int j=n1;
+    while( j<=n2)
+    {
+        cout<<j<<endl;
+        j++;
+    }
+    int k=n1;
+    do
+    {
+        cout<<k<<endl;
+        k++;
+    }
+    while(k<=n2);
+    return 0;
+}
+
