@@ -102,6 +102,104 @@ int main() {
     return 0;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//2d array
+#include <iostream>
+
+using namespace std;
+
+// Function to populate a 2D array with sequential values
+void populateArray(int** array, int numRows, int numCols) {
+    cout << "Enter values:\n";
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < numCols; j++) {
+            cin >> array[i][j];
+        }
+    }
+}
+
+// Function to reverse a 2D array and store it in another array using DMA
+void reverseAndStore(int** originalArray, int numRows, int numCols, int*** reversedArray) {
+    *reversedArray = new int*[numRows];
+
+    for (int i = 0; i < numRows; i++) {
+        (*reversedArray)[i] = new int[numCols];
+        for (int j = 0; j < numCols; j++) {
+            (*reversedArray)[i][j] = originalArray[numRows - 1 - i][j];
+        }
+    }
+}
+
+// Function to display a 2D array
+void displayArray(int** array, int numRows, int numCols) {
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < numCols; j++) {
+            cout << array[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+// Function to free memory allocated for a 2D array
+void freeArray(int** array, int numRows) {
+    for (int i = 0; i < numRows; i++) {
+        delete[] array[i];
+    }
+    delete[] array;
+}
+
+int main() {
+    // Example 2D array
+    int numRows, numCols;
+    cout << "Enter number of rows and columns: ";
+    cin >> numRows >> numCols;
+
+    int** originalArray = new int*[numRows];
+    for (int i = 0; i < numRows; i++) {
+        originalArray[i] = new int[numCols];
+    }
+
+    // Populate the array with user input values
+    populateArray(originalArray, numRows, numCols);
+
+    // Display original array
+    cout << "Original Array:\n";
+    displayArray(originalArray, numRows, numCols);
+
+    // Reverse and store the array in another array
+    int** reversedArray;
+    reverseAndStore(originalArray, numRows, numCols, &reversedArray);
+
+    // Display reversed array
+    cout << "\nReversed Array:\n";
+    displayArray(reversedArray, numRows, numCols);
+
+    // Free memory
+    freeArray(originalArray, numRows);
+    freeArray(reversedArray, numRows);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
 //task 2 search an element in an array
 //using function
 #include<iostream>
