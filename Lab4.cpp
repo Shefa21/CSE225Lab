@@ -59,35 +59,35 @@ int dynArr::getValue(int index) {
 void dynArr::setValue(int index, int value) {
     data[index] = value;
 }
-
-// main.cpp
-#include <iostream>
+//main.cpp
 #include "dynarr.h"
+#include <iostream>
 
 using namespace std;
 
 int main() {
-    // Task 1: Create Objects
-    dynArr obj1;          // Object with no constructor argument
-    dynArr obj2(5);       // Object with the argument 5
+    // 1. Create two objects of the dynArr class
+    dynArr obj1;        // Object with default constructor (size 0)
+    dynArr obj2(5);      // Object with parameterized constructor (size 5)
 
-    // Task 1: Take User Input
-    int input;
-    for (int i = 0; i < 5; ++i) {
-        cout << "Enter value " << (i + 1) << ": ";
-        cin >> input;
-        obj2.setValue(i, input);
+    // 2. Take five input values from the user and store them in the array inside the second object
+    cout << "Enter five values for the array in the second object:\n";
+    for (int i = 0; i < 5; i++) {
+        int value;
+        cout << "Enter value " << i + 1 << ": ";
+        cin >> value;
+        obj2.setValue(i, value);
     }
 
-    // Task 1: Print Stored Values
-    cout << "Values stored in the second object: ";
-    for (int i = 0; i < obj2.getValue(i); ++i) {
-        cout << obj2.getValue(i) << " ";
+    // 3. Print all the values stored in the array inside the second object
+    cout << "Values stored in the array of the second object:\n";
+    for (int i = 0; i < 5; i++) {
+        cout << "Value " << i + 1 << ": " << obj2.getValue(i) << endl;
     }
-    cout << endl;
 
     return 0;
 }
+
 task 2: Modify the header and the source files. Add a member function void allocate(int s) which allows
 you to change the size of the array. Make sure that memory is not leaked
 // dynarr.h
@@ -150,46 +150,57 @@ void dynArr::allocate(int s) {
     data = new int[size];
 }
 
-#include <iostream>
 #include "dynarr.h"
+#include <iostream>
 
 using namespace std;
 
 int main() {
-    // Task 1: Create Objects
-    dynArr obj1;          // Object with no constructor argument
-    dynArr obj2(5);       // Object with the argument 5
+    // Create an object with no constructor argument (size 0)
+    dynArr obj1;
 
-    // Task 1: Take User Input
-    int input;
-    for (int i = 0; i < 5; ++i) {
-        cout << "Enter value " << (i + 1) << ": ";
-        cin >> input;
-        obj2.setValue(i, input);
+    // Create an object with the argument 5
+    dynArr obj2(5);
+
+    // Set values in the array of the second object
+    cout << "Enter five values for the array in the second object:\n";
+    for (int i = 0; i < 5; i++) {
+        int value;
+        cout << "Enter value " << i + 1 << ": ";
+        cin >> value;
+        obj2.setValue(i, value);
     }
 
-    // Task 1: Print Stored Values
-    cout << "Values stored in the second object: ";
-    for (int i = 0; i < obj2.getValue(i); ++i) {
-        cout << obj2.getValue(i) << " ";
+    // Display values in the array of the second object
+    cout << "Values stored in the array of the second object:\n";
+    for (int i = 0; i < 5; i++) {
+        cout << "Value " << i + 1 << ": " << obj2.getValue(i) << endl;
     }
-    cout << endl;
 
-    // Task 2: Change the Size of the Array
+    // Change the size of the array in the second object
     int newSize;
-    cout << "Enter the new size of the array: ";
+    cout << "Enter the new size for the array in the second object: ";
     cin >> newSize;
     obj2.allocate(newSize);
 
-    // Task 2: Print Stored Values after Resizing
-    cout << "Values stored in the second object after resizing: ";
-    for (int i = 0; i < obj2.getValue(i); ++i) {
-        cout << obj2.getValue(i) << " ";
+    // Take input for the new array in the second object
+    cout << "Enter values for the new array in the second object:\n";
+    for (int i = 0; i < newSize; i++) {
+        int value;
+        cout << "Enter value " << i + 1 << ": ";
+        cin >> value;
+        obj2.setValue(i, value);
     }
-    cout << endl;
+
+    // Display the updated array in the second object
+    cout << "Updated values in the array of the second object:\n";
+    for (int i = 0; i < newSize; i++) {
+        cout << "Value " << i + 1 << ": " << obj2.getValue(i) << endl;
+    }
 
     return 0;
 }
+
 task 3 - Modify the header file and the source files again, so that it works for two dimensional array where all the 
 rows are the same size. The user will specify the number of rows and columns as well as the content of the array, 
 which you will take as input from user in the main function
@@ -305,6 +316,140 @@ int main() {
         }
         cout << endl;
     }
+
+    return 0;
+}
+
+
+
+
+
+//Extra : do it for 2d array of rows of different length
+// dynarr.h
+#ifndef DYNARR_H_INCLUDED
+#define DYNARR_H_INCLUDED
+
+class dynArr {
+private:
+    int **data;  // Pointer to an array of pointers for a two-dimensional array with varying row sizes
+    int *rowSizes;  // Array to store the size of each row
+    int numRows;    // Number of rows
+
+public:
+    dynArr();
+    dynArr(int r, int* sizes);
+    ~dynArr();
+    void setValue(int row, int col, int value);
+    int getValue(int row, int col);
+    void allocate(int r, int* sizes);
+};
+
+#endif // DYNARR_H_INCLUDED
+// dynarr.cpp
+#include "dynarr.h"
+#include <iostream>
+
+using namespace std;
+
+dynArr::dynArr() : data(nullptr), rowSizes(nullptr), numRows(0) {}
+
+dynArr::dynArr(int r, int* sizes) : numRows(r) {
+    data = new int*[numRows];   // Allocate an array of row pointers
+    rowSizes = new int[numRows]; // Allocate an array to store row sizes
+
+    for (int i = 0; i < numRows; ++i) {
+        rowSizes[i] = sizes[i];  // Store the size of each row
+        data[i] = new int[rowSizes[i]];  // Allocate each row separately
+    }
+}
+
+dynArr::~dynArr() {
+    // Deallocate memory for each row
+    for (int i = 0; i < numRows; ++i) {
+        delete[] data[i];
+    }
+
+    // Deallocate memory for the array of row pointers and row sizes
+    delete[] data;
+    delete[] rowSizes;
+}
+
+void dynArr::setValue(int row, int col, int value) {
+    if (row >= 0 && row < numRows && col >= 0 && col < rowSizes[row]) {
+        data[row][col] = value;
+    }
+}
+
+int dynArr::getValue(int row, int col) {
+    if (row >= 0 && row < numRows && col >= 0 && col < rowSizes[row]) {
+        return data[row][col];
+    }
+    return -1; // or handle the out-of-bounds case accordingly
+}
+
+void dynArr::allocate(int r, int* sizes) {
+    // Deallocate existing memory
+    for (int i = 0; i < numRows; ++i) {
+        delete[] data[i];
+    }
+    delete[] data;
+    delete[] rowSizes;
+
+    // Allocate new memory for the specified number of rows and sizes
+    numRows = r;
+
+    data = new int*[numRows];   // Allocate an array of row pointers
+    rowSizes = new int[numRows]; // Allocate an array to store row sizes
+
+    for (int i = 0; i < numRows; ++i) {
+        rowSizes[i] = sizes[i];  // Store the size of each row
+        data[i] = new int[rowSizes[i]];  // Allocate each row separately
+    }
+}
+// main.cpp
+#include <iostream>
+#include "dynarr.h"
+
+using namespace std;
+
+int main() {
+    // Task 1: Create Object
+    int numRows;
+
+    cout << "Enter the number of rows: ";
+    cin >> numRows;
+
+    int* rowSizes = new int[numRows];
+
+    cout << "Enter the size for each row:" << endl;
+    for (int i = 0; i < numRows; ++i) {
+        cout << "Size of row " << (i + 1) << ": ";
+        cin >> rowSizes[i];
+    }
+
+    dynArr obj(numRows, rowSizes);
+
+    // Task 2: Take User Input
+    int input;
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < rowSizes[i]; ++j) {
+            cout << "Enter value at row " << (i + 1) << ", column " << (j + 1) << ": ";
+            cin >> input;
+            obj.setValue(i, j, input);
+        }
+    }
+
+    // Task 3: Print Stored Values
+    cout << "Values stored in the object: \n";
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < rowSizes[i]; ++j) {
+            cout << obj.getValue(i, j) << " ";
+        }
+        cout << endl;
+    }
+
+    // Cleanup
+    delete[] rowSizes;
 
     return 0;
 }
