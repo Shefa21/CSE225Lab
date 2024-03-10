@@ -71,7 +71,63 @@ int main()
     cout<<da1.getValue(i)<<endl;//value entered by user at the index i but if index is chosen more than 5 garbage value will be printed
     return 0;
 }
+//complex number
+//complex.h
+#ifndef COMPLEX_H_INCLUDED
+#define COMPLEX_H_INCLUDED
+class Complex
+{
+public:
+    Complex();
+    Complex(double, double);
+    Complex operator+(Complex);
+    void Print();
+private:
+    double Real, Imaginary;
+};
+#endif // COMPLEX_H_INCLUDED
 
+
+//complex.cpp
+#include "complex.h"
+#include <iostream>
+using namespace std;
+Complex::Complex()
+{
+    Real = 0;
+    Imaginary = 0;
+}
+Complex::Complex(double r, double i)
+{
+    Real = r;
+    Imaginary = i;
+}
+Complex Complex::operator+(Complex a)
+{
+    Complex t;
+    t.Real = Real + a.Real;
+    t.Imaginary = Imaginary + a.Imaginary;
+    return t;
+}
+void Complex::Print()
+{
+    cout << Real << endl;
+    cout << Imaginary << endl;
+}
+// main.cpp
+
+#include "complex.h"
+#include <iostream>
+
+int main() {
+    // Code using Complex class
+    Complex complex1(3.0, 4.0);
+    Complex complex2(1.5, 2.5);
+    Complex result = complex1 + complex2;
+    result.Print();
+
+    return 0;
+}
 
 
 
@@ -79,4 +135,97 @@ int main()
 
 
 //Task 2: Recall the complex number class we discussed in our lectures. Modify the class and overload the *
-(multiplication) and the != (not equal) operators for the class given below
+//(multiplication) and the != (not equal) operators for the class given below
+// complex.h
+
+#ifndef COMPLEX_H_INCLUDED
+#define COMPLEX_H_INCLUDED
+
+class Complex {
+public:
+    Complex();
+    Complex(double, double);
+    Complex operator+(const Complex&) const;  // Overloaded +
+    Complex operator*(const Complex&) const;  // Overloaded *
+    bool operator!=(const Complex&) const;    // Overloaded !=
+    void Print() const;
+
+private:
+    double Real, Imaginary;
+};
+
+#endif // COMPLEX_H_INCLUDED
+
+
+// complex.cpp
+
+#include "complex.h"
+#include <iostream>
+
+Complex::Complex() {
+    Real = 0;
+    Imaginary = 0;
+}
+
+Complex::Complex(double r, double i) {
+    Real = r;
+    Imaginary = i;
+}
+
+Complex Complex::operator+(const Complex& a) const {
+    Complex t;
+    t.Real = Real + a.Real;
+    t.Imaginary = Imaginary + a.Imaginary;
+    return t;
+}
+
+Complex Complex::operator*(const Complex& a) const {
+    Complex t;
+    t.Real = (Real * a.Real) - (Imaginary * a.Imaginary);
+    t.Imaginary = (Real * a.Imaginary) + (Imaginary * a.Real);
+    return t;
+}
+
+bool Complex::operator!=(const Complex& a) const {
+    return (Real != a.Real) || (Imaginary != a.Imaginary);
+}
+
+void Complex::Print() const {
+    std::cout << "Real: " << Real << std::endl;
+    std::cout << "Imaginary: " << Imaginary << std::endl;
+}
+
+
+// main.cpp
+
+#include "complex.h"
+#include <iostream>
+
+int main() {
+    // Create two Complex objects
+    Complex complex1(3.0, 4.0);
+    Complex complex2(1.5, 2.5);
+
+    // Use the overloaded + operator to add the two complex numbers
+    Complex resultAddition = complex1 + complex2;
+
+    // Use the overloaded * operator to multiply the two complex numbers
+    Complex resultMultiplication = complex1 * complex2;
+
+    // Print the results
+    std::cout << "Result of addition:" << std::endl;
+    resultAddition.Print();
+
+    std::cout << "\nResult of multiplication:" << std::endl;
+    resultMultiplication.Print();
+
+    // Use the overloaded != operator to check inequality
+    if (complex1 != complex2) {
+        std::cout << "\nComplex numbers are not equal." << std::endl;
+    } else {
+        std::cout << "\nComplex numbers are equal." << std::endl;
+    }
+
+    return 0;
+}
+
