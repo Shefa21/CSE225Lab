@@ -1,3 +1,165 @@
+//general form  of oop in cpp
+#include <iostream>
+
+class MyClass {
+private:
+    // Private data members
+    int privateMember1;
+    double privateMember2;
+
+public:
+    // Constructors
+    MyClass();                      // Default constructor
+    MyClass(int val1, double val2); // Parameterized constructor
+
+    // Getter and Setter for privateMember1
+    int getPrivateMember1() const;
+    void setPrivateMember1(int val);
+
+    // Getter and Setter for privateMember2
+    double getPrivateMember2() const;
+    void setPrivateMember2(double val);
+
+    // Member function
+    void displayInfo() const;
+};
+
+// Default constructor implementation
+MyClass::MyClass() : privateMember1(0), privateMember2(0.0) {
+    // Additional initialization code if needed
+}
+
+// Parameterized constructor implementation
+MyClass::MyClass(int val1, double val2) : privateMember1(val1), privateMember2(val2) {
+    // Additional initialization code if needed
+}
+
+// Getter implementation for privateMember1
+int MyClass::getPrivateMember1() const {
+    return privateMember1;
+}
+
+// Setter implementation for privateMember1
+void MyClass::setPrivateMember1(int val) {
+    privateMember1 = val;
+}
+
+// Getter implementation for privateMember2
+double MyClass::getPrivateMember2() const {
+    return privateMember2;
+}
+
+// Setter implementation for privateMember2
+void MyClass::setPrivateMember2(double val) {
+    privateMember2 = val;
+}
+
+// Member function implementation
+void MyClass::displayInfo() const {
+    std::cout << "Private Member 1: " << privateMember1 << std::endl;
+    std::cout << "Private Member 2: " << privateMember2 << std::endl;
+}
+
+int main() {
+    // Create objects using different constructors
+    MyClass obj1;                   // Default constructor
+    MyClass obj2(10, 3.14);          // Parameterized constructor
+
+    // Use getters and setters
+    obj1.setPrivateMember1(5);
+    obj1.setPrivateMember2(2.71);
+
+    // Display information using member function
+    std::cout << "Object 1 Information:\n";
+    obj1.displayInfo();
+
+    std::cout << "\nObject 2 Information:\n";
+    obj2.displayInfo();
+
+    return 0;
+}
+
+
+
+
+//rectangle class , 2 objects , getters setters methods constructors
+#include <iostream>
+
+class Rectangle {
+private:
+    double length;
+    double width;
+
+public:
+    // Default constructor
+    Rectangle() : length(0.0), width(0.0) {}
+
+    // Parameterized constructor
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Getter for length
+    double getLength() const {
+        return length;
+    }
+
+    // Setter for length
+    void setLength(double l) {
+        length = l;
+    }
+
+    // Getter for width
+    double getWidth() const {
+        return width;
+    }
+
+    // Setter for width
+    void setWidth(double w) {
+        width = w;
+    }
+
+    // Member function to calculate area
+    double calculateArea() const {
+        return length * width;
+    }
+};
+
+int main() {
+    // Create two Rectangle objects
+    Rectangle rect1;  // Object with default constructor
+
+    // Get user input for the dimensions of Rectangle 1
+    double length1, width1;
+    std::cout << "Enter length of Rectangle 1: ";
+    std::cin >> length1;
+    std::cout << "Enter width of Rectangle 1: ";
+    std::cin >> width1;
+
+    // Use setters to set the dimensions of Rectangle 1
+    rect1.setLength(length1);
+    rect1.setWidth(width1);
+
+    Rectangle rect2(4.0, 5.0);  // Object with parameterized constructor
+
+    // Get user input for the dimensions of Rectangle 2
+    double length2, width2;
+    std::cout << "Enter length of Rectangle 2: ";
+    std::cin >> length2;
+    std::cout << "Enter width of Rectangle 2: ";
+    std::cin >> width2;
+
+    // Use setters to set the dimensions of Rectangle 2
+    rect2.setLength(length2);
+    rect2.setWidth(width2);
+
+    // Display the area of each rectangle
+    std::cout << "Area of Rectangle 1: " << rect1.calculateArea() << std::endl;
+    std::cout << "Area of Rectangle 2: " << rect2.calculateArea() << std::endl;
+
+    return 0;
+}
+
+
+
 task 1: In the driver file (main.cpp), perform the following sub-tasks.
 1. Create two objects of this class, one with no constructor argument and one with the argument 5.
 2. Take five input values from the user and store them in the array inside the second object using the set method.
