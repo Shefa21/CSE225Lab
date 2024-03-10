@@ -41,7 +41,8 @@ dynArr::dynArr() {
 
 // Parameterized constructor
 dynArr::dynArr(int s) {
-    data = new int[s];  // Dynamically allocate memory for the array
+    data = new int[s];  // Dynamically allocate memory for the array //pointer_variable = new data_type[size];//pointer_variable: The pointer variable that will store the address of the dynamically allocated memory.
+//data_type: The data type of the elements in the array.
     size = s;           // Set the size of the array
 }
 
