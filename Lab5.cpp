@@ -4,6 +4,8 @@
 #ifndef DYNARR_H_INCLUDED
 #define DYNARR_H_INCLUDED
 template <class anything>
+//template <class or typename T>
+//class or typename declares a type parameter 
 class dynArr
 {
 private:
