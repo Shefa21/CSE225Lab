@@ -1,13 +1,16 @@
 //Task 1: Recall the class we used in the previous lab to allocate memory dynamically. Modify the header file 
 //and the source file given below so that they now work as template class (the array elements in the 
 //dynamically allocated memory can be any type as the user defines).
+ Include guard to prevent multiple inclusion of the header file
 #ifndef DYNARR_H_INCLUDED
 #define DYNARR_H_INCLUDED
+// Declaration of the template class dynArr
 template <class anything>
 //template <class or typename T>
 //class or typename declares a type parameter 
 class dynArr
 {
+//Private data members: pointer to dynamically allocated memory and size of the array
 private:
     anything *data;
     int size;
@@ -28,9 +31,10 @@ public:
 #include <iostream>
 using namespace std;
 template <class anything>
+//ClassName<T>::ConstructorName(Parameters)
 dynArr<anything>::dynArr(int s)
 {
-    data = new anything[s];
+    data = new anything[s];   //pointerVariable = new DataType[size];
     size = s;
 }
 //This is the constructor definition for the dynArr class. It dynamically allocates an array of type anything with size s and sets the size accordingly.
@@ -40,6 +44,7 @@ dynArr<anything>::~dynArr()//The destructor definition. It deallocates the dynam
     delete [] data;
 }
 template <class anything>
+//ReturnType ClassName<T>::FunctionName(ParameterType parameter)
 anything dynArr<anything>::getValue(int index)//Definition of the member function getValue, which retrieves the value at the specified index in the array.
 {
     return data[index];
