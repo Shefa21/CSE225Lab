@@ -236,3 +236,11 @@ int main() {
     return 0;
 }
 
+//Complex Complex::operator/(Complex a)
+{
+    Complex t;
+    double denominator = a.Real * a.Real + a.Imaginary * a.Imaginary;
+    t.Real = (Real * a.Real + Imaginary * a.Imaginary) / denominator;
+    t.Imaginary = (Imaginary * a.Real - Real * a.Imaginary) / denominator;
+    return t;
+}
