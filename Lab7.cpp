@@ -1,5 +1,5 @@
 //unsorted list linked list implementation
-//unsorted list array implementation
+
 unsortedtype.h
 #ifndef UNSORTEDTYPE_H_INCLUDED
 #define UNSORTEDTYPE_H_INCLUDED
