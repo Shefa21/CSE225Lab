@@ -168,3 +168,108 @@ SortedType<ItemType>::GetNextItem(ItemType
     item = currentPos->info;
 }
 //main.cpp
+#include <iostream>
+#include "sortedtype.h"
+#include "timeStamp.h"
+using namespace std;
+
+template<class T>
+void Print(SortedType<T> u) {
+  int length = u.LengthIs();
+  T value;
+  for (int i = 0; i < length; i++) {
+    u.GetNextItem(value);
+    cout << value << endl;
+  }
+  cout << endl;
+}
+
+int main() {
+
+  SortedType<Time> st;
+
+  cout<<"insert 5 time values in the format ssmmhh: ";
+  for(int i =0;i<5;i++)
+  {
+      int a,b,c;
+      cin>>a>>b>>c;
+
+      Time t1(a,b,c);
+      st.InsertItem(t1);
+  }
+
+  cout<<"enter the time to delete";
+  int d,e,f;
+  cin>>d>>e>>f;
+
+  Time temp(d,e,f);
+  st.DeleteItem(temp);
+
+  cout<<"your list after deleting:"<<endl;
+  Print(st);
+
+  return 0;
+}
+
+
+#ifndef TIMESTAMP_H_INCLUDED
+#define TIMESTAMP_H_INCLUDED
+
+#include "sortedtype.cpp"
+
+class Time {
+private:
+  int seconds;
+  int minutes;
+  int hours;
+public:
+  Time();
+  Time(int, int, int);
+  bool operator==(Time);
+  bool operator!=(Time);
+  bool operator>(Time);
+  bool operator<(Time);
+  friend ostream &operator<<(ostream &, Time &);
+};
+
+#endif
+
+
+#include "timeStamp.h"
+
+Time::Time() {
+
+}
+
+Time::Time(int sec, int min, int hr) {
+  seconds = sec;
+  minutes = min;
+  hours = hr;
+}
+
+bool Time::operator==(Time t) {
+  if ((seconds == t.seconds) && (minutes == t.minutes) && (hours == t.hours))
+    return true;
+  else
+    return false;
+}
+
+bool Time::operator<(Time t) {
+  if ((hours < t.hours) || ((hours == t.hours) && (minutes < t.minutes)) || ((hours == t.hours) && (minutes == t.minutes) && (seconds < t.seconds)))
+    return true;
+  else
+    return false;
+}
+
+bool Time::operator>(Time t) {
+  if ((hours > t.hours) || ((hours == t.hours) && (minutes > t.minutes)) || ((hours == t.hours) && (minutes == t.minutes) && (seconds > t.seconds)))
+    return true;
+  else
+    return false;
+}
+
+ostream &operator<<(ostream &os, Time &t) {
+  os << t.seconds << ":" << t.minutes << ":" << t.hours;
+  return os;
+}
+
