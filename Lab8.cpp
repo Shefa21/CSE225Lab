@@ -103,43 +103,102 @@ ItemType StackType<ItemType>::Top() {
 template class StackType<char>;
 
 //main file
-#include "stacktype.h"
-#include "stacktype.cpp"
-#include<iostream>
-#include<string>
+#include <iostream>
+#include "stacktype.cpp" // Include the implementation file to use the template class
 using namespace std;
 
-bool checkB(const string& p) {
-    StackType<char> stack; // Initialize an empty stack to store opening parentheses
-    for (int i = 0; i < p.length(); i++) { // Loop through each character in the string
-        char ch = p[i];
-        if (ch == '(') { // If the character is an opening parentheses
-            stack.Push(ch); // Push it onto the stack
-        } else if (ch == ')') { // If the character is a closing parentheses
-            try {
-                stack.Pop(); // Pop from the stack (matching opening parentheses)
-            } catch (EmptyStack e) { // Catch EmptyStack exception if stack is empty
-                return false; // More closing parentheses than opening ones
-            }
-        }
-    }
-    return stack.IsEmpty(); // Checking if the stack is empty after processing all characters
+// Helper function to check if the stack is empty
+void checkEmpty(bool b) {
+    if (b)
+        cout << "Stack is Empty" << endl;
+    else
+        cout << "Stack is not Empty" << endl;
 }
 
-int main() {
-    string p;
+// Helper function to check if the list is full
+void checkFull(bool b) {
+    if (b)
+        cout << "Stack is Full" << endl;
+    else
+        cout << "Stack is not Full" << endl;
+}
 
-    // Prompt the user to input a set of parentheses
-    cout << "input a set of parentheses: ";
-    getline(cin, p);//Read the entire line of user input, including spaces and special characters
+// Helper function to print the list
+void Print(StackType<int> st) {
+    StackType<int> temp;
 
-    // Check if the parentheses are balanced
-    if (checkB(p)) {
-        cout << "Balanced" << endl; // Output "Balanced" if parentheses are balanced
-    } else {
-        cout << "Not Balanced" << endl; // Output "Not Balanced" if parentheses are not balanced
+    // Push elements from stack 'st' to temporary stack 'temp'
+    while (!st.IsEmpty()) {
+        temp.Push(st.Top());
+        st.Pop();
     }
+
+    // Pop elements from 'temp' and print them while restoring 'st'
+    while (!temp.IsEmpty()) {
+        st.Push(temp.Top());
+        cout << temp.Top() << " ";
+        temp.Pop();
+    }
+    cout << endl;
+}
+//driver file
+int main() {
+    // First Task
+    StackType<int> st; // Creating a stack of integers
+
+    checkEmpty(st.IsEmpty()); // Check if the stack is empty
+
+    // Push four items 5, 7, 4, 2
+    st.Push(5);
+    st.Push(7);
+    st.Push(4);
+    st.Push(2);
+
+    checkEmpty(st.IsEmpty()); // Check if the stack is empty
+
+    checkFull(st.IsFull()); // Check if the stack is full
+
+    Print(st); // Print the values in the stack
+
+    st.Push(3); // Push another item 3
+
+    Print(st); // Print the values in the stack
+
+    checkFull(st.IsFull()); // Check if the stack is full
+
+    st.Pop(); // Pop two items
+    st.Pop();
+
+    cout << st.Top() << endl; // Print top item
+
+    // Second Task
+    StackType<char> parentheses; // Create a stack of characters to take input
+
+    string str; // String to take input from the user
+    cin >> str;
+
+    // Loop until the end of string
+    for (int i = 0; str[i] != '\0'; i++) {
+        char array_item = str[i]; // Get current character from string
+
+        if (array_item == '(') // Push '(' into stack
+            parentheses.Push(array_item);
+
+        try {
+            if (array_item == ')') // Pop '(' if ')' is encountered
+                parentheses.Pop();
+        }
+        catch (EmptyStack) { // If stack is empty and encounter ')', string is unbalanced
+            cout << "Unbalanced" << endl;
+            return 0;
+        }
+    }
+
+    // If stack is empty after processing string, it's balanced
+    if (parentheses.IsEmpty())
+        cout << "Balanced" << endl;
+    else
+        cout << "Not balanced" << endl;
 
     return 0;
 }
-
