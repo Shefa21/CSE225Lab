@@ -741,3 +741,102 @@ int main() {
  Note:
  Helper functions are created to avoid code duplication. You can use them, or you can write your own.
 */
+#ifndef STUDENTINFO_H_INCLUDED
+#define STUDENTINFO_H_INCLUDED
+
+#include <iostream>
+#include <string>
+
+class studentInfo {
+public:
+    // Constructor
+    studentInfo(int id = 0, std::string name = "", double cgpa = 0.0);
+
+    // Function to print student information
+    void printInfo() const;
+
+    // Getter for student ID
+    int getID() const;
+
+    // Overloaded equality operator
+    bool operator==(const studentInfo& other) const;
+
+private:
+    int studentID;
+    std::string studentName;
+    double studentCGPA;
+};
+
+#endif // STUDENTINFO_H_INCLUDED
+#include "studentInfo.h"
+
+// Constructor definition
+studentInfo::studentInfo(int id, std::string name, double cgpa) :
+    studentID(id), studentName(name), studentCGPA(cgpa) {}
+
+// Function to print student information
+void studentInfo::printInfo() const {
+    std::cout << "Student ID: " << studentID << std::endl;
+    std::cout << "Student Name: " << studentName << std::endl;
+    std::cout << "Student CGPA: " << studentCGPA << std::endl;
+}
+
+// Getter for student ID
+int studentInfo::getID() const {
+    return studentID;
+}
+
+// Overloaded equality operator
+bool studentInfo::operator==(const studentInfo& other) const {
+    return (studentID == other.studentID);
+}
+#include <iostream>
+#include "studentInfo.h"
+#include "unsortedtype.h"
+#include "unsortedtype.cpp" // Including the implementation file for template class
+
+int main() {
+    // Create studentInfo objects
+    studentInfo student1(12345, "John Doe", 3.5);
+    studentInfo student2(15467, "Jane Smith", 3.7);
+    studentInfo student3(13569, "Alice Johnson", 3.9);
+    studentInfo student4(17684, "Bob Anderson", 3.2);
+    studentInfo student5(19876, "Emily Brown", 3.8);
+
+    // Create a list of studentInfo objects
+    UnsortedType<studentInfo> studentList;
+
+    // Insert student records into the list
+    studentList.InsertItem(student1);
+    studentList.InsertItem(student2);
+    studentList.InsertItem(student3);
+    studentList.InsertItem(student4);
+    studentList.InsertItem(student5);
+
+    // Delete the record with ID 15467
+    studentList.DeleteItem(studentInfo(15467));
+
+    // Retrieve and print whether record with ID 13569 is found or not
+    studentInfo searchItem;
+    bool found = false;
+    studentList.RetrieveItem(studentInfo(13569), found);
+    std::cout << "Record with ID 13569 is ";
+    if (found) {
+        std::cout << "found:" << std::endl;
+        searchItem.printInfo();
+    } else {
+        std::cout << "not found." << std::endl;
+    }
+
+    // Print the list of student records
+    std::cout << "\nList of student records:" << std::endl;
+    int length = studentList.LengthIs();
+    studentInfo studentRecord;
+    for (int i = 0; i < length; ++i) {
+        studentList.GetNextItem(studentRecord);
+        studentRecord.printInfo();
+        std::cout << std::endl;
+    }
+
+    return 0;
+}
