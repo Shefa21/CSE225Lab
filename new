@@ -1653,3 +1653,48 @@ int main()
 
 
 }
+template <class ItemType>
+void UnsortedType<ItemType>::InsertItemAtEnd(ItemType item)
+{
+    NodeType* location = listData;
+    NodeType* newNode = new NodeType;
+    newNode->info = item;
+    newNode->next = NULL;
+
+    if (listData == NULL) {
+        listData = newNode;
+    } else {
+        while (location->next != NULL) {
+            location = location->next;
+        }
+        location->next = newNode;
+    }
+    length++;
+}
+
+
+template <class ItemType>
+void UnsortedType<ItemType>::InsertItemAtMiddle(ItemType item, int position)
+{
+    if (position < 1 || position > length + 1) {
+        cout << "Invalid position\n";
+        return;
+    }
+
+    NodeType* newNode = new NodeType;
+    newNode->info = item;
+
+    if (position == 1) {
+        newNode->next = listData;
+        listData = newNode;
+    } else {
+        NodeType* prevNode = listData;
+        for (int i = 1; i < position - 1; ++i) {
+            prevNode = prevNode->next;
+        }
+        newNode->next = prevNode->next;
+        prevNode->next = newNode;
+    }
+    length++;
+}
+Explain the code 
