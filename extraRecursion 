@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int combinations(int n, int k) {
+    if (k == 0 || k == n) {
+        return 1;
+    } else {
+        return combinations(n - 1, k - 1) + combinations(n - 1, k);
+    }
+}
+
+int main() {
+    int n, k;
+    cout << "Enter the value of n: ";
+    cin >> n;
+    cout << "Enter the value of k: ";
+    cin >> k;
+
+    if (k > n) {
+        cout << "Invalid input! k should be less than or equal to n." << endl;
+        return 1;
+    }
+
+    cout << "The combination of " << n << " choose " << k << " is: " << combinations(n, k) << endl;
+
+    return 0;
+}
